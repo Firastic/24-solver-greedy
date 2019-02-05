@@ -94,11 +94,11 @@ def solve():
 				cur -= arr[j];			
 	arr.reverse()
 	for j in range(4):
-		button(str(arr[j])+' ',150+j*2*75,350,50,50,green,bright_green,None)
+		button(str(arr[j])+' ',150+j*2*75,350,50,50,white,white,None)
 		if(j < 3):
-			button(str(v[j])+' ',150+(j*2+1)*75,350,50,50,green,bright_green,None)
-	button('result :' + str(cur), display_width/2-50, 400,100,50,green,bright_green,None)
-	button('operator\'s point:' + str(vall), display_width/2-100,450,200,50,green,bright_green,None)
+			button(str(v[j])+' ',150+(j*2+1)*75,350,50,50,white,white,None)
+	button('result :' + str(cur), display_width/2-50, 400,100,50,white,white,None)
+	button('operator\'s point:' + str(vall), display_width/2-100,450,200,50,white,white,None)
 	card = [random.randrange(1,13),random.randrange(1,13),random.randrange(1,13),random.randrange(1,13)]
 # button("Play Again",150,450,100,50,green,bright_green,game_loop)
 
