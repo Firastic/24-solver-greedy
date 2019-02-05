@@ -14,7 +14,7 @@ def solve(arr):
 		else:
 			arr[1],arr[2] = arr[2],arr[1]
 	for j in range(2,-1,-1):
-		if(cur*arr[j] >= 6 and cur*arr[j] <= 35 and (arr[j] != 1 or cur == 24) and not flag):
+		if(cur*arr[j] >= 6 and cur*arr[j] <= 35 and ((arr[j] != 1 and not flag) or cur == 24)):
 			v.append('*');
 			vall += 3;
 			cur *= arr[j];
