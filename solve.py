@@ -1,6 +1,7 @@
 def dist(x):
 	return abs(24-x)
 
+#Todo: Improve case 12 12 1 1
 def solve(arr):
 	arr.sort()
 	total = sum(arr)
@@ -8,7 +9,7 @@ def solve(arr):
 	vall = 0
 	flag = False
 	v = []
-	if(total <= 20 and arr[3]*arr[2] > 35):
+	if(total <= 20 and arr[3]*arr[2] >= 32):
 		if(arr[0] != 1):
 			arr[0],arr[2] = arr[2],arr[0]
 		else:
