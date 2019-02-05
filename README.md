@@ -1,1 +1,9 @@
 # 24-solver-greedy
+
+
+
+IN GAME HOTKEY(S):
+
+LEFT_ARROW  : SHUFFLE <br>
+RIGHT_ARROW : SOLVE
+
