@@ -25,7 +25,7 @@ gameDisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('24 Game Solver')
 clock = pygame.time.Clock()
  
-gameIcon = pygame.image.load('red_back.png')
+gameIcon = pygame.image.load('./PNG/red_back.png')
 
 pygame.display.set_icon(gameIcon)
 
