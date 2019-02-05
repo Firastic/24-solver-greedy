@@ -37,6 +37,20 @@ def shuffle():
     button(str(card[1]),275+17.5,200,100,50,green,bright_green,None)
     button(str(card[2]),400+17.5,200,100,50,green,bright_green,None)
     button(str(card[3]),525+17.5,200,100,50,green,bright_green,None)
+    Ccard = pygame.image.load('./PNG/' + str(card[0]) + '.png')
+    Dcard = pygame.image.load('./PNG/' + str(13 + card[1]) + '.png')
+    Hcard = pygame.image.load('./PNG/' + str(26 + card[2]) + '.png')
+    Scard = pygame.image.load('./PNG/' + str(39 + card[3]) + '.png')
+    gameDisplay.blit(pygame.transform.scale(Ccard,(100,153)), (150+17.5,40))
+    gameDisplay.blit(pygame.transform.scale(Dcard,(100,153)), (275+17.5,40))
+    gameDisplay.blit(pygame.transform.scale(Hcard,(100,153)), (400+17.5,40))
+    gameDisplay.blit(pygame.transform.scale(Scard,(100,153)), (525+17.5,40))
+#gameDisplay.blit(Ccard, (0,0))
+#screen.blit(pygame.transform.scale(pic, (500, 500)), (0, 0))
+#♣ Clubs 1 - 13
+#♦ Diamonds 14 - 26
+#♥ Hearts 27 - 39
+#♠ Spades 40 - 52
     global isShuffled
     isShuffled = True
     # button("Play Again",150,450,100,50,green,bright_green,game_loop)
