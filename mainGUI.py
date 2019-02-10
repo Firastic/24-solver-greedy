@@ -135,12 +135,14 @@ def game_intro():
         clock.tick(15)
 
 def keyb_inp():
-	print('\n')
-	card[0] = int(input("Input your 1st card: "))
-	card[1] = int(input("Input your 2nd card: "))
-	card[2] = int(input("Input your 3rd card: "))
-	card[3] = int(input("Input your 4th card: "))		
-		
+    print('\n')
+    card[0] = int(input("Input your 1st card: "))
+    card[1] = int(input("Input your 2nd card: "))
+    card[2] = int(input("Input your 3rd card: "))
+    card[3] = int(input("Input your 4th card: "))
+    shuffle()
+    game_solve()
+
 def rfileext():
     pygame.quit()
     inputFile = input("Masukkan nama file input! ")
