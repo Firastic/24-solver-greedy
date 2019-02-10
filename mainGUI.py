@@ -2,6 +2,7 @@ import pygame
 import time
 import random
 import sys
+from solve import solve
 pygame.init()
 
 display_width = 800
@@ -25,6 +26,7 @@ clock = pygame.time.Clock()
 gameIcon = pygame.image.load('./PNG/red_back.png')
 pygame.display.set_icon(gameIcon)
 def shuffle():
+    global isShuffled
     gameDisplay.fill(white)
     button(str(card[0]),150+17.5,200,100,50,white,bright_green,None)
     button(str(card[1]),275+17.5,200,100,50,white,bright_green,None)
@@ -38,52 +40,11 @@ def shuffle():
     gameDisplay.blit(pygame.transform.scale(Dcard,(100,153)), (275+17.5,40))
     gameDisplay.blit(pygame.transform.scale(Hcard,(100,153)), (400+17.5,40))
     gameDisplay.blit(pygame.transform.scale(Scard,(100,153)), (525+17.5,40))
-#gameDisplay.blit(Ccard, (0,0))
-#screen.blit(pygame.transform.scale(pic, (500, 500)), (0, 0))
-#♣ Clubs 1 - 13
-#♦ Diamonds 14 - 26
-#♥ Hearts 27 - 39
-#♠ Spades 40 - 52
-    global isShuffled
     isShuffled = True
 
 def dist(x):
     return (abs(24-x))
 
-def solve(arr):
-	arr.sort()
-	total = sum(arr)
-	cur = arr[3]
-	vall = 0
-	flag = False
-	v = []
-	if(total <= 20 and arr[3]*arr[2] >= 32):
-		if(arr[0] != 1):
-			arr[0],arr[2] = arr[2],arr[0]
-		else:
-			arr[1],arr[2] = arr[2],arr[1]
-	for j in range(2,-1,-1):
-		if(cur*arr[j] >= 6 and cur*arr[j] <= 35 and ((arr[j] != 1 and not flag) or (cur == 24 and j == 0))):
-			v.append('*');
-			vall += 3;
-			cur *= arr[j];
-		else:
-			flag = True;
-			if(dist(cur+arr[j]) <= dist(cur-arr[j])):
-				v.append('+');
-				vall += 5;
-				cur += arr[j];
-			else:
-				v.append('-');
-				vall += 4;
-				cur -= arr[j];
-	arr.reverse()
-	for j in range(4):
-		print(arr[j],end=' ')
-		if(j < 3):
-			print(v[j],end=' ')
-
-#Todo: Improve case 12 12 1 1
 def game_solve():
 	global isShuffled
 	global card
@@ -150,10 +111,8 @@ def quitgame():
     pygame.quit()
     quit()
 
-
-
 def game_intro():
-
+    global isShuffled
     intro = True
 
     while intro:
@@ -168,7 +127,6 @@ def game_intro():
         TextSurf, TextRect = text_objects("24 Game Solver", largeText)
         TextRect.center = ((display_width/2),(display_height/2))
         gameDisplay.blit(TextSurf, TextRect)
-        global isShuffled
         isShuffled = False
         button("Start",150,450,100,50,green,bright_green,game_loop)
         button("Quit",550,450,100,50,red,bright_red,quitgame)
@@ -202,6 +160,7 @@ def rfileext():
     fin.close()
     fout.close()
     quit()
+
 def game_loop():
     global card
 
@@ -224,7 +183,6 @@ def game_loop():
                     shuffle()
                 if event.key == pygame.K_RIGHT:
                     game_solve()
-
 
         pygame.display.update()
         clock.tick(60)
