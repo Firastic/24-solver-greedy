@@ -1,0 +1,3 @@
++1, selisih arr[1]&arr[2] = 1 : jumlahin sama 1, kaliin angka terbesar
+							 2 : kaliin angka terbesar, jumlah/kurangin angka 1
+							 3 : kurangin sama 1, kaliin angka terbesar
