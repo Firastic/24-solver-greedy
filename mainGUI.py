@@ -16,6 +16,8 @@ bright_red = (255,0,0)
 bright_green = (0,255,0)
 block_color = (53,115,255)
 
+myfont = "buvard"
+
 gameDisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('24 Game Solver')
 clock = pygame.time.Clock()
@@ -138,7 +140,7 @@ def button(msg,x,y,w,h,ic,ac,action=None):
             action()
     else:
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
-    smallText = pygame.font.SysFont("comicsansms",20)
+    smallText = pygame.font.SysFont(myfont,20)
     textSurf, textRect = text_objects(msg, smallText)
     textRect.center = ( (x+(w/2)), (y+(h/2)) )
     gameDisplay.blit(textSurf, textRect)
@@ -162,7 +164,7 @@ def game_intro():
                 quit()
 
         gameDisplay.fill(grey)
-        largeText = pygame.font.SysFont("comicsansms",100)
+        largeText = pygame.font.SysFont(myfont,100)
         TextSurf, TextRect = text_objects("24 Game Solver", largeText)
         TextRect.center = ((display_width/2),(display_height/2))
         gameDisplay.blit(TextSurf, TextRect)
@@ -174,6 +176,13 @@ def game_intro():
         pygame.display.update()
         clock.tick(15)
 
+def keyb_inp():
+	print('\n')
+	card[0] = int(input("Input your 1st card: "))
+	card[1] = int(input("Input your 2nd card: "))
+	card[2] = int(input("Input your 3rd card: "))
+	card[3] = int(input("Input your 4th card: "))		
+		
 def rfileext():
     pygame.quit()
     inputFile = input("Masukkan nama file input! ")
@@ -206,9 +215,10 @@ def game_loop():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            button("Input",250,525,100,50,green,bright_green,keyb_inp)
             button("Shuffle",150,450,100,50,green,bright_green,shuffle)
             button("Solve",550,450,100,50,red,bright_red,game_solve)
-            button("Input File",350,525,100,50,green,bright_green,rfileext)
+            button("Input File",450,525,100,50,green,bright_green,rfileext)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     shuffle()
