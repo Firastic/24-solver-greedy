@@ -3,7 +3,6 @@ import time
 import random
 import sys
 from solve import solve
-pygame.init()
 
 display_width = 800
 display_height = 600
@@ -20,11 +19,10 @@ block_color = (53,115,255)
 myfont = "buvard"
 
 gameDisplay = pygame.display.set_mode((display_width,display_height))
-pygame.display.set_caption('24 Game Solver')
 clock = pygame.time.Clock()
 
 gameIcon = pygame.image.load('./PNG/red_back.png')
-pygame.display.set_icon(gameIcon)
+
 def shuffle():
     global isShuffled
     gameDisplay.fill(white)
@@ -189,5 +187,9 @@ def game_loop():
         pygame.display.update()
         clock.tick(60)
 
-game_intro()
-game_loop()
+def start_game():
+    pygame.init()
+    pygame.display.set_caption('24 Game Solver')
+    pygame.display.set_icon(gameIcon)
+    game_intro()
+    game_loop()

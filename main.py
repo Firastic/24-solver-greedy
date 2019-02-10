@@ -1,13 +1,10 @@
 from solve import solve
+from mainGUI import start_game
 import sys
 
 if __name__ == '__main__':
 	if(len(sys.argv) == 1):	
-		a = int(input("Enter first number\n"))
-		b = int(input("Enter second number\n"))
-		c = int(input("Enter third number\n"))
-		d = int(input("Enter fourth number\n"))
-		solve([a,b,c,d])
+		start_game()
 	elif(len(sys.argv) != 3):
 		print('Please pass 2 arguments')
 	else:
@@ -25,3 +22,4 @@ if __name__ == '__main__':
 		sys.stdin = orig_stdin
 		fin.close()
 		fout.close()
+		
