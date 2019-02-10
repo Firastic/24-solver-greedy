@@ -1,12 +1,12 @@
 import pygame
 import time
 import random
- 
+import sys
 pygame.init()
- 
+
 display_width = 800
 display_height = 600
- 
+
 black = (0,0,0)
 white = (255,255,255)
 grey = (125,125,125)
@@ -19,10 +19,9 @@ block_color = (53,115,255)
 gameDisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('24 Game Solver')
 clock = pygame.time.Clock()
- 
+
 gameIcon = pygame.image.load('./PNG/red_back.png')
 pygame.display.set_icon(gameIcon)
-
 def shuffle():
     gameDisplay.fill(white)
     button(str(card[0]),150+17.5,200,100,50,white,bright_green,None)
@@ -45,12 +44,45 @@ def shuffle():
 #♠ Spades 40 - 52
     global isShuffled
     isShuffled = True
-    
-def lala(x):
+
+def dist(x):
     return (abs(24-x))
 
+def solve(arr):
+	arr.sort()
+	total = sum(arr)
+	cur = arr[3]
+	vall = 0
+	flag = False
+	v = []
+	if(total <= 20 and arr[3]*arr[2] >= 32):
+		if(arr[0] != 1):
+			arr[0],arr[2] = arr[2],arr[0]
+		else:
+			arr[1],arr[2] = arr[2],arr[1]
+	for j in range(2,-1,-1):
+		if(cur*arr[j] >= 6 and cur*arr[j] <= 35 and ((arr[j] != 1 and not flag) or (cur == 24 and j == 0))):
+			v.append('*');
+			vall += 3;
+			cur *= arr[j];
+		else:
+			flag = True;
+			if(dist(cur+arr[j]) <= dist(cur-arr[j])):
+				v.append('+');
+				vall += 5;
+				cur += arr[j];
+			else:
+				v.append('-');
+				vall += 4;
+				cur -= arr[j];
+	arr.reverse()
+	for j in range(4):
+		print(arr[j],end=' ')
+		if(j < 3):
+			print(v[j],end=' ')
+
 #Todo: Improve case 12 12 1 1
-def solve():
+def game_solve():
 	global isShuffled
 	global card
 	if(not isShuffled):
@@ -75,14 +107,14 @@ def solve():
 			cur *= arr[j];
 		else:
 			flag = True;
-			if(lala(cur+arr[j]) <= lala(cur-arr[j])):
+			if(dist(cur+arr[j]) <= dist(cur-arr[j])):
 				v.append('+');
 				vall += 5;
 				cur += arr[j];
 			else:
 				v.append('-');
 				vall += 4;
-				cur -= arr[j];			
+				cur -= arr[j];
 	arr.reverse()
 	for j in range(4):
 		button(str(arr[j])+' ',150+j*2*75,350,50,50,white,white,None)
@@ -92,12 +124,10 @@ def solve():
 	button('operator\'s point:' + str(vall), display_width/2-100,450,200,50,white,white,None)
 	card = [random.randrange(1,13),random.randrange(1,13),random.randrange(1,13),random.randrange(1,13)]
 
-
-
 def text_objects(text, font):
     textSurface = font.render(text, True, black)
     return textSurface, textSurface.get_rect()
- 
+
 def button(msg,x,y,w,h,ic,ac,action=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
@@ -105,14 +135,14 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
         if click[0] == 1 and action != None:
-            action()         
+            action()
     else:
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
     smallText = pygame.font.SysFont("comicsansms",20)
     textSurf, textRect = text_objects(msg, smallText)
     textRect.center = ( (x+(w/2)), (y+(h/2)) )
     gameDisplay.blit(textSurf, textRect)
-    
+
 
 def quitgame():
     pygame.quit()
@@ -130,7 +160,7 @@ def game_intro():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-                
+
         gameDisplay.fill(grey)
         largeText = pygame.font.SysFont("comicsansms",100)
         TextSurf, TextRect = text_objects("24 Game Solver", largeText)
@@ -143,38 +173,51 @@ def game_intro():
 
         pygame.display.update()
         clock.tick(15)
-         
+
 def rfileext():
-	pass
-
-
+    pygame.quit()
+    inputFile = input("Masukkan nama file input! ")
+    outputFile = input("Masukkan nama file output! ")
+    orig_stdout = sys.stdout
+    orig_stdin = sys.stdin
+    fin = open(inputFile, 'r')
+    fout = open(outputFile, 'w')
+    sys.stdin = fin
+    sys.stdout = fout
+    a,b,c,d = map(int, input().split())
+    card = [a,b,c,d]
+    solve(card)
+    sys.stdout = orig_stdout
+    sys.stdin = orig_stdin
+    print("file telah di save di ",outputFile)
+    fin.close()
+    fout.close()
+    quit()
 def game_loop():
     global card
-    
+
     card = [random.randrange(1,13),random.randrange(1,13),random.randrange(1,13),random.randrange(1,13)]
     gameExit = False
     gameDisplay.fill(white)
     while not gameExit:
-        
+
         for event in pygame.event.get():
-			
+
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
             button("Shuffle",150,450,100,50,green,bright_green,shuffle)
-            button("Solve",550,450,100,50,red,bright_red,solve)
+            button("Solve",550,450,100,50,red,bright_red,game_solve)
             button("Input File",350,525,100,50,green,bright_green,rfileext)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     shuffle()
                 if event.key == pygame.K_RIGHT:
-                    solve()
-                
-        
+                    game_solve()
+
+
         pygame.display.update()
         clock.tick(60)
 
 game_intro()
 game_loop()
-pygame.quit()
-quit()
